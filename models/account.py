@@ -74,36 +74,37 @@ class BankAccount:
         print(f"Recipient New Balance: ₦{destination.balance}")
 
 
-account1 = BankAccount(
-    1001,
-    "savings",
-    5000,
-)
+if __name__ == "__main__":
+    account1 = BankAccount(
+        1001,
+        "savings",
+        5000,
+    )
 
-account2 = BankAccount(
-    1002,
-    "savings",
-    7000,
-)
-account1.display_account()
-account1.deposit(3000)
-account1.deposit(-348)
-account1.withdraw(300)
-account1.withdraw(50000)
-account1.withdraw(-345)
-account1.display_account()
-account1.deactivated_account()
-account1.display_account()
-account1.activated_account()
-account1.display_account()
+    account2 = BankAccount(
+        1002,
+        "savings",
+        7000,
+    )
+    account1.display_account()
+    account1.deposit(3000)
+    account1.deposit(-348)
+    account1.withdraw(300)
+    account1.withdraw(50000)
+    account1.withdraw(-345)
+    account1.display_account()
+    account1.deactivated_account()
+    account1.display_account()
+    account1.activated_account()
+    account1.display_account()
 
-account1.deposit(5000)
-account1.deactivated_account()
-account1.deposit(2000)
-account1.withdraw(1000)
-account1.activated_account()
+    account1.deposit(5000)
+    account1.deactivated_account()
+    account1.deposit(2000)
+    account1.withdraw(1000)
+    account1.activated_account()
 
-account2.display_account()
-account2.deposit(40000)
-account2.activated_account()
-account2.transfer(account1, 3000)
+    account2.display_account()
+    account2.deposit(40000)
+    account2.activated_account()
+    account2.transfer(account1, 3000)
