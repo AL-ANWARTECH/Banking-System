@@ -31,12 +31,24 @@ class Bank:
     def add_customer(self, customer):
         self.customers.append(customer)
 
+
     def find_customer(self, customer_id):
         for customer in self.customers:
             if customer.customer_id == customer_id:
                 return customer
         return None
-    
+
+
+    def remove_customer(self, customer_id):
+        for customer in self.customers:
+            if customer.customer_id == customer_id:
+                self.customers.remove(customer)
+                return
+
+    def display_customers(self):
+        for customer in self.customers:
+            customer.display_info()
+            
 
 bank = Bank()
 account1 = BankAccount(1001, "savings", 7000)
@@ -55,8 +67,15 @@ bank.display_accounts()
 print(bank.customers)
 
 customer1 = Customer(1, "Anwar", "anwarsagirmustapha1@gmail.com", "09067508735")
+customer2 = Customer(2, "Salma", "salman@gmail.com", "08099992410")
 bank.customers
 bank.add_customer(customer1)
 print(bank.customers)
 customer = bank.find_customer(1)
 print(customer)
+
+bank.remove_customer(1)
+print(bank.customers)
+bank.add_customer(customer1)
+bank.add_customer(customer2)
+bank.display_customers()
