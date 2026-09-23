@@ -48,7 +48,15 @@ class Bank:
     def display_customers(self):
         for customer in self.customers:
             customer.display_info()
-            
+
+    def open_account(self, customer, account):
+        if self.find_account(account.account_number):
+            print("Account already exists.")
+            return
+        
+        self.accounts.append(account)
+        customer.add_account(account)
+        print("Account opened successfully.")
 
 bank = Bank()
 account1 = BankAccount(1001, "savings", 7000)
@@ -68,6 +76,7 @@ print(bank.customers)
 
 customer1 = Customer(1, "Anwar", "anwarsagirmustapha1@gmail.com", "09067508735")
 customer2 = Customer(2, "Salma", "salman@gmail.com", "08099992410")
+account4 = BankAccount(1004, "savings", 12000)
 bank.customers
 bank.add_customer(customer1)
 print(bank.customers)
@@ -79,3 +88,10 @@ print(bank.customers)
 bank.add_customer(customer1)
 bank.add_customer(customer2)
 bank.display_customers()
+
+bank.open_account(customer1, account1)
+print(bank.accounts)
+print(customer1.accounts)
+bank.open_account(customer1, account4)
+print(bank.accounts)
+print(customer1.accounts)
