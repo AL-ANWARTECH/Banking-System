@@ -17,6 +17,26 @@ class Customer:
     def add_account(self, account):
         self.accounts.append(account)
 
+
+    def find_account(self, account_number):
+        for account in self.accounts:
+            if  account.account_number == account_number:
+                return account
+        return None
+
+    def display_accounts(self):
+        for account in self.accounts:
+            account.display_account()
+
+    def remove_account(self, account_number):
+        for account in self.accounts:
+            if account.account_number == account_number:
+                self.accounts.remove(account)
+                return
+
+        print("Account not found.")
+            
+
 customer1 = Customer(
     1,
     "Anwar sagir",
@@ -32,3 +52,9 @@ account1 = BankAccount(1001, "savings", 5000)
 
 customer1.add_account(account1)
 print(customer1.accounts)
+
+customer1.find_account(1001)
+customer1.display_accounts()
+customer1.remove_account(1001)
+customer1.display_accounts()
+customer1.remove_account(1001)
