@@ -53,11 +53,34 @@ class Bank:
         if self.find_account(account.account_number):
             print("Account already exists.")
             return
+
+        if customer.find_account(account.account_number):
+            print("Customer already owns this account.")
+            return
         
         self.accounts.append(account)
         customer.add_account(account)
         print("Account opened successfully.")
 
+
+    def get_accounts(self):
+        return len(self.accounts)
+
+    def find_customer_by_email(self, email):
+        for customer in self.customers:
+            if customer.email == email:
+                return customer
+        return None
+
+    def find_customer_by_phone(self, phone):
+        for customer in self.customers:
+            if customer.phone == phone:
+                return customer
+        return None
+
+    
+    
+    
 bank = Bank()
 account1 = BankAccount(1001, "savings", 7000)
 account2 = BankAccount(1002, "savings", 9000)
@@ -95,3 +118,18 @@ print(customer1.accounts)
 bank.open_account(customer1, account4)
 print(bank.accounts)
 print(customer1.accounts)
+
+bank.open_account(customer1, account1)
+account4 = BankAccount(1004, "current", 10000)
+bank.open_account(customer1, account4)
+
+
+print(customer1.get_account_count())
+customer1.display_account_count()
+
+customer = bank.find_customer_by_email("salman@gmail.com")
+print(customer.display_info())
+
+customer = bank.find_customer_by_phone("08099992410")
+if customer:
+    customer.display_info()
