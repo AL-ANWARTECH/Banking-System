@@ -8,7 +8,13 @@ class Bank:
         self.customers = []
 
     def add_account(self, account):
+        if self.find_account(account.account_number):
+            print("Account already exists.")
+            return
+
+        
         self.accounts.append(account)
+        print("Account added successfully.")
 
 
     def find_account(self, account_number):
@@ -133,3 +139,17 @@ print(customer.display_info())
 customer = bank.find_customer_by_phone("08099992410")
 if customer:
     customer.display_info()
+
+bank.add_account(account1)
+bank.add_account(account2)
+bank.add_account(account3)
+
+duplicate_account = BankAccount(1001, "savings", 3000)
+bank.add_account(duplicate_account)
+print("Total accounts:", bank.get_accounts())
+
+duplicate_account = BankAccount(1001, "savings", 3000)
+
+bank.open_account(customer1, duplicate_account)
+
+print("Total accounts:", bank.get_accounts())
