@@ -813,3 +813,21 @@ print("Valid customer ID:", customer1.customer_id)
 # customer9 = Customer(9, "Anwar", "anwar@gmail.com", 8012345678)
 customer10 = Customer(10, "Anwar", "anwar@example.com", "08012345678")
 print("Customer created successfully:", customer10.name)
+
+# Step 25: Test adding an account to a customer
+
+customer11 = Customer(
+    11,
+    "Test Customer",
+    "test@example.com",
+    "08012345678"
+)
+
+account11 = BankAccount(1011, "savings", 5000)
+
+customer11.add_account(account11)
+
+print("Customer accounts:", len(customer11.accounts))
+print("Account number:", customer11.accounts[0].account_number)
+
+account11 = BankAccount(1011, "savings", 5000)
