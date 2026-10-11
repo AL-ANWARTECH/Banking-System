@@ -46,8 +46,16 @@ class Customer:
         print(f"Email: {self.email}")
         print(f"Phone: {self.phone}")
 
+   
     def add_account(self, account):
+        for existing_account in self.accounts:
+            if existing_account.account_number == account.account_number:
+                print("This account is already linked to the customer.")
+                return
+
         self.accounts.append(account)
+        print("Account added successfully.")
+
 
 
     def find_account(self, account_number):
@@ -831,3 +839,12 @@ print("Customer accounts:", len(customer11.accounts))
 print("Account number:", customer11.accounts[0].account_number)
 
 account11 = BankAccount(1011, "savings", 5000)
+
+
+customer11.add_account(account11)
+customer11.add_account(account11)
+
+print(
+    "Customer accounts after duplicate test:",
+    len(customer11.accounts)
+)
