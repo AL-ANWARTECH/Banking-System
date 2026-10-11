@@ -35,7 +35,12 @@ class Bank:
 
 
     def add_customer(self, customer):
+        if self.find_customer(customer.customer_id):
+            print("Customer already exists.")
+            return
+        
         self.customers.append(customer)
+        print("Customer added successfully")
 
 
     def find_customer(self, customer_id):
@@ -159,3 +164,13 @@ duplicate_account = BankAccount(1001, "savings", 3000)
 bank.open_account(customer1, duplicate_account)
 
 print("Total accounts:", bank.get_accounts())
+
+duplicate_customer = Customer(
+    1,
+    "Anwar",
+    "anwarsagirmustapha1@gmail.com",
+    "09067508735"
+)
+
+bank.add_customer(duplicate_customer)
+print("Total customer:", len(bank.customers))
