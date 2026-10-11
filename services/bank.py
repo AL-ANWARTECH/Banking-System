@@ -43,6 +43,10 @@ class Bank:
             print("Customer already exists.")
             return
 
+        if self.find_customer_by_email(customer.email):
+            print("A customer with this email already exists.")
+            return
+
         self.customers.append(customer)
         print("Customer added successfully.")
 
@@ -96,6 +100,12 @@ class Bank:
     def find_customer_by_phone(self, phone):
         for customer in self.customers:
             if customer.phone == phone:
+                return customer
+        return None
+
+    def find_customer_by_email(self, email):
+        for customer in self.customers:
+            if customer.email == email:
                 return customer
         return None
 
@@ -180,4 +190,16 @@ bank.add_customer(duplicate_customer)
 print("Total customer:", len(bank.customers))
 
 bank.add_customer("Invalid Customer")
+print("Total customers:", len(bank.customers))
+
+
+duplicate_email_customer = Customer(
+    3,
+    "Another Customer",
+    "anwarsagirmustapha1@gmail.com",
+    "08012345678"
+)
+
+bank.add_customer(duplicate_email_customer)
+
 print("Total customers:", len(bank.customers))
