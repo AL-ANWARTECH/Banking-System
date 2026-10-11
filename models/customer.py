@@ -1,8 +1,39 @@
+import re
 from models import account
 from models.account import BankAccount
 
 class Customer:
     def __init__(self, customer_id, name, email, phone):
+        if not isinstance(customer_id, int) or isinstance(customer_id, bool):
+            raise TypeError("Customer ID must be an integer.")
+
+        if customer_id <= 0:
+            raise ValueError("Customer ID must be greater than 0.")
+
+        if not isinstance(name, str):
+            raise TypeError("Customer name must be a string.")
+
+        if not name.strip():
+            raise ValueError("Customer name cannot be empty.")
+
+        if not isinstance(email, str):
+            raise TypeError("Customer email must be a string.")
+
+        if not email.strip():
+            raise ValueError("Customer email cannot be empty.")
+
+        if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email):
+            raise ValueError("Please enter a valid email address.")
+
+        if not isinstance(phone, str):
+            raise TypeError("Customer phone number must be a string.")
+
+        if not phone.strip():
+            raise ValueError("Customer phone number cannot be empty.")
+
+        if not re.fullmatch(r"0\d{10}", phone):
+            raise ValueError("Phone number must contain 11 digits and start with 0.")
+        
         self.customer_id = customer_id
         self.name = name
         self.email = email
@@ -765,3 +796,20 @@ print(
     "Recipient balance after sender deposit:",
     destination_test_account.balance
 )
+
+customer1 = Customer(1, "Anwar", "anwar@example.com", "08012345678")
+print("Valid customer ID:", customer1.customer_id)
+
+# customer2 = Customer(0, "Anwar", "anwar@example.com", "08012345678")
+# customer3 = Customer(3, "", "anwar@example.com", "08012345678")
+
+# customer4 = Customer(4, "Anwar", "", "08012345678")
+
+# customer5 = Customer(5, "Anwar", "anwar.com", "08012345678")
+# customer6 = Customer(6, "Anwar", "anwar@example.com", "")
+# customer7 = Customer(7, "Anwar", "anwar@example.com", "12345")
+# customer8 = Customer(8, "Anwar", "anwar@example.com", "08012345678")
+# print("Valid customer phone:", customer8.phone)
+# customer9 = Customer(9, "Anwar", "anwar@gmail.com", 8012345678)
+customer10 = Customer(10, "Anwar", "anwar@example.com", "08012345678")
+print("Customer created successfully:", customer10.name)
