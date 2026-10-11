@@ -35,12 +35,16 @@ class Bank:
 
 
     def add_customer(self, customer):
+        if not isinstance(customer, Customer):
+            print("Invalid customer.")
+            return
+
         if self.find_customer(customer.customer_id):
             print("Customer already exists.")
             return
-        
+
         self.customers.append(customer)
-        print("Customer added successfully")
+        print("Customer added successfully.")
 
 
     def find_customer(self, customer_id):
@@ -174,3 +178,6 @@ duplicate_customer = Customer(
 
 bank.add_customer(duplicate_customer)
 print("Total customer:", len(bank.customers))
+
+bank.add_customer("Invalid Customer")
+print("Total customers:", len(bank.customers))
