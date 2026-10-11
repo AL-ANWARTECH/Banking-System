@@ -55,7 +55,12 @@ class Bank:
         for customer in self.customers:
             customer.display_info()
 
+    
     def open_account(self, customer, account):
+        if self.find_customer(customer.customer_id) is None:
+            print("Customer is not registered with this bank.")
+            return
+
         if self.find_account(account.account_number):
             print("Account already exists.")
             return
@@ -63,10 +68,11 @@ class Bank:
         if customer.find_account(account.account_number):
             print("Customer already owns this account.")
             return
-        
+
         self.accounts.append(account)
         customer.add_account(account)
         print("Account opened successfully.")
+
 
 
     def get_accounts(self):
