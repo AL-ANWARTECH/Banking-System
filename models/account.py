@@ -1,5 +1,11 @@
 class BankAccount:
     def __init__(self, account_number, account_type, balance):
+        if not isinstance(account_number, int) or isinstance(account_number, bool):
+            raise TypeError("Account number must be an integer.")
+
+        if account_number <= 0:
+            raise ValueError("Account number must be greater than 0.")
+
         if account_type not in ("savings", "current"):
             raise ValueError("Account type must be either 'savings' or 'current'.")
 
@@ -118,5 +124,5 @@ if __name__ == "__main__":
     account2.activated_account()
     account2.transfer(account1, 3000)
 
-    account3 = BankAccount(1003, "current", 2500)
+    account3 = BankAccount("ABC1003", "current", 2500)
     account3.display_account()
