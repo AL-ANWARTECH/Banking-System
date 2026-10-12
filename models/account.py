@@ -1,3 +1,4 @@
+import math
 class BankAccount:
     def __init__(self, account_number, account_type, balance):
         if not isinstance(account_number, int) or isinstance(account_number, bool):
@@ -29,31 +30,45 @@ class BankAccount:
 
     def deposit(self, amount):
         if not self.is_active:
-            print("Transaction rejected. Account is inactive")
+            print("Transaction rejected. Account is inactive.")
             return
-        
-        self.amount = amount
-        if amount > 0:
-            self.balance += amount
-            print(f"New Balance:  ₦{self.balance}")
-        else:
-            print("Is not allow to deposit negative or zero.")
+
+        if not isinstance(amount, (int, float)) or isinstance(amount, bool):
+            raise TypeError("Deposit amount must be an int or float.")
+
+        if not math.isfinite(amount):
+            raise ValueError("Deposit amount must be a finite number.")
+
+        if amount <= 0:
+            print("Deposit amount must be greater than zero.")
+            return
+
+        self.balance += amount
+        print(f"Deposit successful. New Balance: ₦{self.balance}")
 
 
     def withdraw(self, amount):
         if not self.is_active:
-            print("Transaction is rejected. Account is inactive")
+            print("Transaction rejected. Account is inactive.")
             return
-        
+
+        if not isinstance(amount, (int, float)) or isinstance(amount, bool):
+            raise TypeError("Withdrawal amount must be an int or float.")
+
+        if not math.isfinite(amount):
+            raise ValueError("Withdrawal amount must be a finite number.")
+
         if amount <= 0:
-            print("Withdrawal Amount Must be Greater Than 0.")
+            print("Withdrawal amount must be greater than zero.")
             return
+
         if amount > self.balance:
-            print("Insufficient Balance.")
+            print("Insufficient balance.")
             return
+
         self.balance -= amount
-        print("Withdrawal Successful.")
-        print(f"New Balance:  ₦{self.balance}")
+        print("Withdrawal successful.")
+        print(f"New Balance: ₦{self.balance}")
 
 
     def deactivated_account(self):
