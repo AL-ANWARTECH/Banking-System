@@ -41,6 +41,48 @@ class TestCustomerTransfer(unittest.TestCase):
         self.assertEqual(self.sender.balance, 1500)
         self.assertEqual(self.recipient.balance, 3500)
 
+
+    def test_transfer_preserves_total_balance(self):
+        total_before = (
+            self.sender.balance + self.recipient.balance
+        )
+
+        self.customer.transfer_to_account(
+            5001,
+            self.recipient,
+            500
+        )
+
+        total_after = (
+            self.sender.balance + self.recipient.balance
+        )
+
+        self.assertEqual(total_before, total_after)
+
+
+    def test_invalid_recipient_object(self):
+        sender_balance_before = self.sender.balance
+        recipient_balance_before = self.recipient.balance
+
+        with self.assertRaises(TypeError):
+            self.customer.transfer_to_account(
+                5001,
+                "not a bank account",
+                500
+            )
+
+        self.assertEqual(
+            self.sender.balance,
+            sender_balance_before
+        )
+
+        self.assertEqual(
+            self.recipient.balance,
+            recipient_balance_before
+        )
+
+
+
     def test_insufficient_balance(self):
         self.customer.transfer_to_account(
             5001,

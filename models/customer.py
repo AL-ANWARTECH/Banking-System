@@ -148,6 +148,11 @@ class Customer:
 
 
     def transfer_to_account(self, account_number, destination_account, amount):
+        if not isinstance(destination_account, BankAccount):
+            raise TypeError(
+                "Destination must be a BankAccount instance."
+            )
+
         my_account = self.find_account(account_number)
 
         if my_account is None:
