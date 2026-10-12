@@ -156,5 +156,46 @@ class TestCustomerTransfer(unittest.TestCase):
         self.assertEqual(self.recipient.balance, 3000)
 
 
+    def test_string_transfer_amount(self):
+        sender_balance_before = self.sender.balance
+        recipient_balance_before = self.recipient.balance
+
+        with self.assertRaises(TypeError):
+            self.customer.transfer_to_account(
+                5001,
+                self.recipient,
+                "500"
+            )
+
+        self.assertEqual(
+            self.sender.balance,
+            sender_balance_before
+        )
+        self.assertEqual(
+            self.recipient.balance,
+            recipient_balance_before
+        )
+
+    def test_boolean_transfer_amount(self):
+        sender_balance_before = self.sender.balance
+        recipient_balance_before = self.recipient.balance
+
+        with self.assertRaises(TypeError):
+            self.customer.transfer_to_account(
+                5001,
+                self.recipient,
+                True
+            )
+
+        self.assertEqual(
+            self.sender.balance,
+            sender_balance_before
+        )
+        self.assertEqual(
+            self.recipient.balance,
+            recipient_balance_before
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -179,6 +179,11 @@ class Customer:
             print("Insufficient balance.")
             return
 
+        if isinstance(amount, bool) or not isinstance(amount, (int, float)):
+            raise TypeError(
+                "Transfer amount must be an int or float."
+            )
+
         my_account.transfer(destination_account, amount)
 
 
