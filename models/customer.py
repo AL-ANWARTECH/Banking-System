@@ -1,3 +1,4 @@
+import math
 import re
 from models import account
 from models.account import BankAccount
@@ -33,7 +34,7 @@ class Customer:
 
         if not re.fullmatch(r"0\d{10}", phone):
             raise ValueError("Phone number must contain 11 digits and start with 0.")
-        
+
         self.customer_id = customer_id
         self.name = name
         self.email = email
@@ -46,7 +47,7 @@ class Customer:
         print(f"Email: {self.email}")
         print(f"Phone: {self.phone}")
 
-   
+
     def add_account(self, account):
         for existing_account in self.accounts:
             if existing_account.account_number == account.account_number:
@@ -131,7 +132,7 @@ class Customer:
         if not account.is_active:
             print("Cannot deposit to an inactive account.")
             return
-        
+
         account.deposit(amount)
 
     def withdraw_from_account(self, account_number, amount):
@@ -152,10 +153,17 @@ class Customer:
             raise TypeError(
                 "Destination must be a BankAccount instance."
             )
+
         if isinstance(amount, bool) or not isinstance(amount, (int, float)):
             raise TypeError(
-             "Transfer amount must be an int or float."
-    )
+                "Transfer amount must be an int or float."
+            )
+
+        if not math.isfinite(amount):
+            raise ValueError(
+                "Transfer amount must be a finite number."
+            )
+        
         my_account = self.find_account(account_number)
 
         if my_account is None:
@@ -206,7 +214,7 @@ class Customer:
 if __name__ == "__main__":
 
 
-   
+
     customer1 = Customer(
         1,
         "Anwar sagir",

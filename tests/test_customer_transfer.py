@@ -1,6 +1,6 @@
 
 import unittest
-
+import math
 from models.customer import Customer
 from models.account import BankAccount
 
@@ -195,7 +195,74 @@ class TestCustomerTransfer(unittest.TestCase):
             self.recipient.balance,
             recipient_balance_before
         )
+    def test_nan_transfer_amount(self):
+        sender_balance_before = self.sender.balance
+        recipient_balance_before = self.recipient.balance
 
+        with self.assertRaisesRegex(
+            ValueError,
+            "Transfer amount must be a finite number."
+        ):
+            self.customer.transfer_to_account(
+                5001,
+                self.recipient,
+                float("nan")
+            )
+
+        self.assertEqual(
+            self.sender.balance,
+            sender_balance_before
+        )
+        self.assertEqual(
+            self.recipient.balance,
+            recipient_balance_before
+        )
+
+    def test_positive_infinity_transfer_amount(self):
+        sender_balance_before = self.sender.balance
+        recipient_balance_before = self.recipient.balance
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "Transfer amount must be a finite number."
+        ):
+            self.customer.transfer_to_account(
+                5001,
+                self.recipient,
+                float("inf")
+            )
+
+        self.assertEqual(
+            self.sender.balance,
+            sender_balance_before
+        )
+        self.assertEqual(
+            self.recipient.balance,
+            recipient_balance_before
+        )
+
+    def test_negative_infinity_transfer_amount(self):
+        sender_balance_before = self.sender.balance
+        recipient_balance_before = self.recipient.balance
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "Transfer amount must be a finite number."
+        ):
+            self.customer.transfer_to_account(
+                5001,
+                self.recipient,
+                float("-inf")
+            )
+
+        self.assertEqual(
+            self.sender.balance,
+            sender_balance_before
+        )
+        self.assertEqual(
+            self.recipient.balance,
+            recipient_balance_before
+        )
 
 if __name__ == "__main__":
     unittest.main()
