@@ -848,3 +848,265 @@ print(
     "Customer accounts after duplicate test:",
     len(customer11.accounts)
 )
+
+
+# Part 54: Test insufficient transfer balance
+
+print("\n--- Part 54: Insufficient Transfer Balance ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 499
+
+    print("Sender balance before transfer:", sender_account.balance)
+    print("Recipient balance before transfer:", destination_test_account.balance)
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        500
+    )
+
+    print("Sender balance after transfer:", sender_account.balance)
+    print("Recipient balance after transfer:", destination_test_account.balance)
+
+
+# Part 55: Test transfer to a nonexistent account
+
+print("\n--- Part 55: Nonexistent Recipient Account ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 1000
+
+    recipient_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        9999,
+        destination_test_account,
+        500
+    )
+
+    print("Sender balance after rejected transfer:", sender_account.balance)
+    print("Recipient balance after rejected transfer:", destination_test_account.balance)
+
+# Part 56: Test successful customer transfer
+
+print("\n--- Part 56: Successful Customer Transfer ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+
+    sender_before = sender_account.balance
+    recipient_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        500
+    )
+
+    print("Sender balance before:", sender_before)
+    print("Sender balance after:", sender_account.balance)
+    print("Recipient balance before:", recipient_before)
+    print("Recipient balance after:", destination_test_account.balance)
+
+
+# Part 57: Verify total balance before and after transfer
+
+print("\n--- Part 57: Total Balance Verification ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+    destination_test_account.balance = 3000
+
+    total_before = (
+        sender_account.balance
+        + destination_test_account.balance
+    )
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        500
+    )
+
+    total_after = (
+        sender_account.balance
+        + destination_test_account.balance
+    )
+
+    print("Total before transfer:", total_before)
+    print("Total after transfer:", total_after)
+    print("Total preserved:", total_before == total_after)
+
+
+# Part 58: Reject transfer to the same account
+
+print("\n--- Part 58: Transfer to Same Account ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+
+    balance_before = sender_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        sender_account,
+        500
+    )
+
+    print("Balance before transfer:", balance_before)
+    print("Balance after transfer:", sender_account.balance)
+    print("Balance unchanged:", balance_before == sender_account.balance)
+
+
+# Part 59: Reject transfer from an inactive sender account
+
+print("\n--- Part 59: Transfer from Inactive Sender ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+    sender_account.is_active = False
+    destination_test_account.balance = 3000
+
+    sender_balance_before = sender_account.balance
+    recipient_balance_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        500
+    )
+
+    print("Sender balance before:", sender_balance_before)
+    print("Sender balance after:", sender_account.balance)
+    print("Recipient balance before:", recipient_balance_before)
+    print("Recipient balance after:", destination_test_account.balance)
+
+    # Restore the sender account for future tests
+    sender_account.is_active = True
+
+
+# Part 60: Reject transfer to an inactive recipient
+
+print("\n--- Part 60: Transfer to Inactive Recipient ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+    sender_account.is_active = True
+
+    destination_test_account.balance = 3000
+    destination_test_account.is_active = False
+
+    sender_balance_before = sender_account.balance
+    recipient_balance_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        500
+    )
+
+    print("Sender balance before:", sender_balance_before)
+    print("Sender balance after:", sender_account.balance)
+    print("Recipient balance before:", recipient_balance_before)
+    print("Recipient balance after:", destination_test_account.balance)
+
+    # Restore the recipient account for future tests
+    destination_test_account.is_active = True
+
+
+# Part 61: Reject a zero-amount transfer
+
+print("\n--- Part 61: Zero-Amount Transfer ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+    sender_account.is_active = True
+
+    destination_test_account.balance = 3000
+    destination_test_account.is_active = True
+
+    sender_balance_before = sender_account.balance
+    recipient_balance_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        0
+    )
+
+    print("Sender balance before:", sender_balance_before)
+    print("Sender balance after:", sender_account.balance)
+    print("Recipient balance before:", recipient_balance_before)
+    print("Recipient balance after:", destination_test_account.balance)
+
+# Part 62: Reject a negative transfer amount
+
+print("\n--- Part 62: Negative-Amount Transfer ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+    sender_account.is_active = True
+
+    destination_test_account.balance = 3000
+    destination_test_account.is_active = True
+
+    sender_balance_before = sender_account.balance
+    recipient_balance_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        -500
+    )
+
+    print("Sender balance before:", sender_balance_before)
+    print("Sender balance after:", sender_account.balance)
+    print("Recipient balance before:", recipient_balance_before)
+    print("Recipient balance after:", destination_test_account.balance)
+
+
+# Part 63: Reject a transfer exceeding the balance
+
+print("\n--- Part 63: Excessive Transfer Amount ---")
+
+sender_account = test_customer2.find_account(5001)
+
+if sender_account is not None:
+    sender_account.balance = 2000
+    sender_account.is_active = True
+
+    destination_test_account.balance = 3000
+    destination_test_account.is_active = True
+
+    sender_balance_before = sender_account.balance
+    recipient_balance_before = destination_test_account.balance
+
+    test_customer2.transfer_to_account(
+        5001,
+        destination_test_account,
+        2500
+    )
+
+    print("Sender balance before:", sender_balance_before)
+    print("Sender balance after:", sender_account.balance)
+    print("Recipient balance before:", recipient_balance_before)
+    print("Recipient balance after:", destination_test_account.balance)
